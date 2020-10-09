@@ -1,7 +1,7 @@
 class Artist
 
     @@all = []
-    attr_reader :name
+    attr_accessor :name, :genre, :songs, :artist
     
     def self.all
         @@all
@@ -13,7 +13,19 @@ class Artist
     end
 
     def songs
-        
+        Song.all.select do |song|
+            song.artist == self
+        end
+    end
+
+    def new_song(name, genre)
+        Song.new(name, self, genre)
+    end
+
+    def genres
+        Song.all.collect do |song|
+          song.genre if song.artist == self
+        end
     end
 
 
